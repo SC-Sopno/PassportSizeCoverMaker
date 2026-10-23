@@ -1,8 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<link rel="icon" type="image/png" href="favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Passport Photo Pouch Maker</title>
@@ -46,8 +44,8 @@ align-items:center;overflow:hidden;padding:0 2mm}
 font-size:7px;padding:2px 5px;z-index:2;border-radius:2px}
 .pouchsvg{width:100%;height:100%;position:absolute;inset:0}
 .pouch-content{position:relative;z-index:1;width:100%;text-align:center;
-padding-top:14mm;color:var(--dark)}
-.logo{width:12mm;height:12mm;object-fit:contain;display:none;margin:0 auto 2mm}
+padding-top:28mm;color:var(--dark)}
+.logo{width:12mm;height:12mm;object-fit:contain;display:none;margin:0 auto 2.5mm}
 .shop{font-weight:900;font-size:clamp(9px,1.3vw,17px);letter-spacing:.5px;
 overflow-wrap:anywhere}
 .phone{display:inline-block;border-radius:20px;padding:1.5mm 4mm;
@@ -55,11 +53,11 @@ background:var(--accent);color:white;font-size:8px;font-weight:bold;margin-top:2
 .address{font-size:7px;font-weight:700;margin:1.8mm auto;max-width:92%;overflow-wrap:anywhere;line-height:1.35}
 .ribbon{display:inline-block;background:var(--tag);color:white;font-weight:bold;
 font-size:6px;padding:1.5mm 3mm;border-radius:10px;margin-top:2mm}
-.photo-info{position:absolute;left:14%;right:14%;bottom:4%;
-height:20%;display:flex;flex-direction:column;justify-content:center;
+.photo-info{position:absolute;left:18%;right:18%;bottom:22%;
+height:17%;display:flex;flex-direction:column;justify-content:center;
 text-align:left;font-size:6px;color:#526779}
 .write-line{border-bottom:1px dotted #9aabba;height:5mm}
-.footnote{position:absolute;bottom:1mm;font-size:5px;color:#9aa6b5}\n.maker{position:absolute;top:1.5mm;right:1.5mm;font-size:5px;font-weight:800;color:#64748b;z-index:3}
+.footnote{position:absolute;bottom:1mm;font-size:5px;color:#9aa6b5}.maker{position:absolute;top:1.5mm;right:1.5mm;font-size:5px;font-weight:800;color:#64748b;z-index:3}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.preview{padding:8px}
 #sheet{transform-origin:top left;width:210mm;max-width:none}}
 @media print{
@@ -146,7 +144,7 @@ text-align:left;font-size:6px;color:#526779}
 <main class="preview">
  <div class="previewhead">
   <span>▸ TRUE A4 PRINT SIZE · 210 × 297 mm</span>
-  <span>4 custom photo pouches</span>
+  <span>Measured pouch net · approx. 90 × 130 mm each (4-up A4)</span>
  </div>
  <div id="sheet"></div>
 </main>
@@ -176,16 +174,17 @@ function uploadLogo(e){
 }
 function svgShape(){
  const cut=$("cut").checked;
- const stroke=cut?"#6ba6b9":"#c5d4e2";
- return `<svg class="pouchsvg" viewBox="0 0 180 250" preserveAspectRatio="none">
- <path d="M38 8 L142 8 L157 32 L171 44 L171 103 L157 116 L157 242 L23 242 L23 116 L9 103 L9 44 L23 32 Z"
- fill="#fff" stroke="${stroke}" stroke-width="${cut?1.2:.7}"
- ${cut?'stroke-dasharray="3 2"':''}/>
- <path d="M38 8 L23 32 L9 44 M142 8 L157 32 L171 44
- M9 103 L23 116 L23 242 M171 103 L157 116 L157 242"
- fill="none" stroke="#8cb7c7" stroke-width=".8" stroke-dasharray="2 2"/>
- <path d="M23 116 L157 116 M23 150 L157 150"
- stroke="#c5d4e2" stroke-width=".8" stroke-dasharray="2 2"/>
+ const stroke=cut?"#438da5":"#c5d4e2";
+ // Cutting outline modeled on the user's reference: straight body,
+ // angled shoulders, side notches and broad fold/glue panels.
+ return `<svg class="pouchsvg" viewBox="0 0 100 140" preserveAspectRatio="none" aria-label="Passport photo cover cutting template">
+ <path d="M16 0 L84 0 L88 18 L96 24 L96 78 L88 84 L84 140 L16 140 L12 84 L4 78 L4 24 L12 18 Z"
+ fill="#fff" stroke="${stroke}" stroke-width="${cut?0.75:0.45}"/>
+ <!-- Dotted fold lines: central pouch body, side folds, top and bottom flaps -->
+ <path d="M12 18 L88 18 M12 84 L88 84 M16 0 L12 18 M84 0 L88 18 M12 18 L12 84 M88 18 L88 84 M12 84 L16 140 M88 84 L84 140"
+ fill="none" stroke="#6f9eaf" stroke-width="0.55" stroke-dasharray="1.5 1.2"/>
+ <!-- Main body guide -->
+ <path d="M12 18 L88 18 L88 84 L12 84 Z" fill="none" stroke="#c5d4e2" stroke-width="0.4"/>
  </svg>`;
 }
 function pouchHTML(i){
@@ -206,7 +205,8 @@ function pouchHTML(i){
  <div class="write-line">NAME:</div>
  <div class="write-line">DATE:</div>
   </div>`:""}
- <div class="footnote">FOLD & GLUE TO ASSEMBLE</div>
+ <div class="footnote">CUT OUTER LINE · FOLD DOTTED LINE · GLUE SIDE TABS</div>
+ <div class="maker">make by SC_Sopno</div>
  </div>`;
 }
 function esc(s){
